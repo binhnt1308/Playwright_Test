@@ -64,5 +64,24 @@ test.describe('Viva International - Đăng ký', () => {
         expect(await errorMessages.count()).toBeGreaterThan(0);
     });
 
+    test('TC03 - tìm ca phe ', async ({ page }) => {
+
+        await page.goto(SIGNUP_URL);
+        await page.waitForTimeout(5000);
+
+        // tim kiem 
+await page.locator('input[placeholder*="Tìm sản phẩm"]').fill('cà phê phin');
+        await page.waitForTimeout(5000);
+
+        // Tìm thông báo lỗi
+        const errorMessages = page.locator(
+            "//*[contains(@class,'text-red') or contains(@class,'error')]"
+        );
+
+        await expect(errorMessages.first()).toBeVisible();
+
+        expect(await errorMessages.count()).toBeGreaterThan(0);
+    });
+
 });
 
